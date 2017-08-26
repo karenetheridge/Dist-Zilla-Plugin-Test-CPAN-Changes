@@ -2,10 +2,13 @@ package Dist::Zilla::Plugin::Test::CPAN::Changes;
 use strict;
 use warnings;
 # ABSTRACT: release tests for your changelog
-# VERSION
+
+our $VERSION = '0.013';
 
 use Moose;
-use Data::Section -setup;
+use Sub::Exporter::ForMethods;
+use Data::Section 0.200002 { installer => Sub::Exporter::ForMethods::method_installer }, '-setup';
+
 with
     'Dist::Zilla::Role::FileGatherer',
     'Dist::Zilla::Role::PrereqSource',

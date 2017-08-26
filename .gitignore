@@ -1,2 +1,6 @@
-Dist-Zilla-Plugin-Test-CPAN-Changes*
-.build
+/.ackrc
+/.build/
+!/.gitignore
+/.latest
+/Dist-Zilla-Plugin-Test-CPAN-Changes-*/
+/Dist-Zilla-Plugin-Test-CPAN-Changes-*.tar.gz
