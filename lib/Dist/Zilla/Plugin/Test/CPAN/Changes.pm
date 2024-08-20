@@ -8,7 +8,8 @@ use Moose;
 use Data::Section -setup;
 with
     'Dist::Zilla::Role::FileGatherer',
-    'Dist::Zilla::Role::PrereqSource';
+    'Dist::Zilla::Role::PrereqSource',
+    'Dist::Zilla::Role::TextTemplate';
 
 =head1 SYNOPSIS
 
@@ -31,15 +32,23 @@ following file:
 
 See L<Test::CPAN::Changes> for what this test does.
 
-=head2 Alternate changelog filenames
+=head1 CONFIGURATION OPTIONS
 
-L<CPAN::Changes::Spec> specifies that the changelog will be called 'Changes' -
-if you want to use a different filename for whatever reason, do:
+=head2 changelog
+
+The file name of the change log file to test. Defaults to F<Changes>.
+
+If you want to use a different filename for whatever reason, do:
 
     [Test::CPAN::Changes]
     changelog = CHANGES
 
 and that file will be tested instead.
+
+=head2 filename
+
+The name of the test file to be generated. Defaults to
+F<xt/release/cpan-changes.t>.
 
 =cut
 
@@ -49,6 +58,12 @@ has changelog => (
     default => 'Changes',
 );
 
+has filename => (
+    is      => 'ro',
+    isa     => 'Str',
+    default => 'xt/release/cpan-changes.t',
+);
+
 around dump_config => sub
 {
     my ($orig, $self) = @_;
@@ -56,6 +71,7 @@ around dump_config => sub
 
     $config->{+__PACKAGE__} = {
         changelog => $self->changelog,
+        filename  => $self->filename,
         blessed($self) ne __PACKAGE__
             ? ( version => (defined __PACKAGE__->VERSION ? __PACKAGE__->VERSION : 'dev') )
             : (),
@@ -72,20 +88,22 @@ sub gather_files {
 
     require Dist::Zilla::File::InMemory;
 
-    for my $file (qw( xt/release/cpan-changes.t )){
-        my $content = ${$self->section_data($file)};
+    my $content = ${$self->section_data('__TEST__')};
 
-        my $changes_filename = $self->changelog;
+    my $final_content = $self->fill_in_string(
+        $content,
+        {
+            changes_filename => \($self->changelog),
+            plugin           => \$self,
+        },
+    );
 
-        $content =~ s/CHANGESFILENAME/$changes_filename/;
-        $content =~ s/PLUGIN/ref($self)/e;
-        $content =~ s/VERSION/$self->VERSION || '<self>'/e;
+    $self->add_file( Dist::Zilla::File::InMemory->new(
+        name => $self->filename,
+        content => $final_content,
+    ));
 
-        $self->add_file( Dist::Zilla::File::InMemory->new(
-            name => $file,
-            content => $content,
-        ));
-    }
+    return;
 }
 
 # Register the release test prereq as a "develop requires"
@@ -113,14 +131,14 @@ __PACKAGE__->meta->make_immutable;
 no Moose;
 
 __DATA__
-__[ xt/release/cpan-changes.t ]__
+__[ __TEST__ ]__
 use strict;
 use warnings;
 
-# this test was generated with PLUGIN VERSION
+# this test was generated with {{ ref($plugin) . ' ' . $plugin->VERSION }}
 
 use Test::More 0.96 tests => 1;
 use Test::CPAN::Changes;
 subtest 'changes_ok' => sub {
-    changes_file_ok('CHANGESFILENAME');
+    changes_file_ok('{{ $changes_filename }}');
 };
