@@ -1,6 +1,7 @@
 Revision history for Perl module {{$dist->name}}
 
 {{$NEXT}}
+  - new "filename" configuration option [haarg, gh-13]
 
 0.012     2016-06-12
   - fix silly typo in method name [ether's fault, gh-11]
