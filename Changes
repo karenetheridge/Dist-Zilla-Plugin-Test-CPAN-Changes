@@ -1,4 +1,6 @@
-Revision history for Perl module Dist-Zilla-Plugin-Test-CPAN-Changes
+Revision history for Perl module {{$dist->name}}
+
+{{$NEXT}}
 
 0.013     2024-08-20 22:34:17Z
   - new "filename" configuration option [haarg, gh-13]

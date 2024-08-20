@@ -3,7 +3,7 @@ use strict;
 use warnings;
 # ABSTRACT: release tests for your changelog
 
-our $VERSION = '0.013';
+our $VERSION = '0.014';
 
 use Moose;
 use Sub::Exporter::ForMethods;
