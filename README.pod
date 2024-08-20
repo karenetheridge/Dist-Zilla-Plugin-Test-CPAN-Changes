@@ -1,0 +1,109 @@
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Dist::Zilla::Plugin::Test::CPAN::Changes - release tests for your changelog
+
+=head1 VERSION
+
+version 0.013
+
+=for test_synopsis BEGIN { die "SKIP: synopsis isn't perl code" }
+
+=head1 SYNOPSIS
+
+In C<dist.ini>:
+
+    [Test::CPAN::Changes]
+
+=head1 DESCRIPTION
+
+This is an extension of L<Dist::Zilla::Plugin::InlineFiles>, providing the
+following file:
+
+    xt/release/cpan-changes.t - a standard Test::CPAN::Changes test
+
+See L<Test::CPAN::Changes> for what this test does.
+
+=head1 CONFIGURATION OPTIONS
+
+=head2 changelog
+
+The file name of the change log file to test. Defaults to F<Changes>.
+
+If you want to use a different filename for whatever reason, do:
+
+    [Test::CPAN::Changes]
+    changelog = CHANGES
+
+and that file will be tested instead.
+
+=head2 filename
+
+The name of the test file to be generated. Defaults to
+F<xt/release/cpan-changes.t>.
+
+=for Pod::Coverage gather_files register_prereqs
+
+=head1 SUPPORT
+
+Bugs may be submitted through L<https://github.com/doherty/Dist-Zilla-Plugin-Test-CPAN-Changes/issues>.
+
+There is also a mailing list available for users of this distribution, at
+L<http://dzil.org/#mailing-list>.
+
+There is also an irc channel available for users of this distribution, at
+L<C<#distzilla> on C<irc.perl.org>|irc://irc.perl.org/#distzilla>.
+
+I am also usually active on irc, as 'ether' at C<irc.perl.org> and C<irc.libera.chat>.
+
+=head1 AUTHOR
+
+Mike Doherty <doherty@cpan.org>
+
+=head1 CONTRIBUTORS
+
+=for stopwords Mike Doherty Karen Etheridge Olivier Mengué Graham Knop Kent Fredric Mark Gardner Nelo Onyiah
+
+=over 4
+
+=item *
+
+Mike Doherty <mike@mikedoherty.ca>
+
+=item *
+
+Karen Etheridge <ether@cpan.org>
+
+=item *
+
+Olivier Mengué <dolmen@cpan.org>
+
+=item *
+
+Graham Knop <haarg@haarg.org>
+
+=item *
+
+Kent Fredric <kentfredric@gmail.com>
+
+=item *
+
+Mark Gardner <mgardner@ariasystems.com>
+
+=item *
+
+Nelo Onyiah <nelo.onyiah@gmail.com>
+
+=back
+
+=head1 COPYRIGHT AND LICENCE
+
+This software is copyright (c) 2011 by Mike Doherty.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
