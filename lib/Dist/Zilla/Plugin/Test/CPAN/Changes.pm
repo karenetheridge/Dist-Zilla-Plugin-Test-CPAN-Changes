@@ -31,10 +31,13 @@ following file:
 
 See L<Test::CPAN::Changes> for what this test does.
 
-=head2 Alternate changelog filenames
+=head1 CONFIGURATION OPTIONS
 
-L<CPAN::Changes::Spec> specifies that the changelog will be called 'Changes' -
-if you want to use a different filename for whatever reason, do:
+=head2 changelog
+
+The file name of the change log file to test. Defaults to F<Changes>.
+
+If you want to use a different filename for whatever reason, do:
 
     [Test::CPAN::Changes]
     changelog = CHANGES
